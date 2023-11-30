@@ -116,7 +116,7 @@
                 let markerElement = document.createElement('div')
                 markerElement.className = 'marker' + locationId
                 markerElement.id = locationId
-                markerElement.style.backgroundImage = 'url(https://static-00.iconduck.com/assets.00/mapbox-icon-2048x2048-pmda994e.png)'
+                markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location.png') !!})'
                 markerElement.style.backgroundSize = 'cover'
                 markerElement.style.width = '50px'
                 markerElement.style.height = '50px'
