@@ -15,11 +15,19 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_pemilik');
+            $table->string('no_hp');
+            $table->string('nama_usaha');
+            $table->string('kegiatan_usaha');
+            $table->enum('klasifikasi_usaha', ['MIKRO', 'KECIL', 'MENENGAH']);
+            $table->enum('is_active', ['1', '0',])->default('1');
+            $table->string('jenis_produk');
+            $table->string('alamat');
+            $table->string('kecamatan');
             $table->string('long');
             $table->string('lat');
-            $table->string('title');
-            $table->text('description');
-            $table->string('image');
+            // $table->text('description');
+            // $table->string('image');
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@
                         <div id="geocoder" class="geocoder"></div>
                     </div>
                     <div class="card-body">
-                        <div id='map' style='width: 100%; height: 60vh;'></div>
+                        <div id='map' style='width: 100%; height: 50%;'></div>
                     </div>
                 </div>
             </div>
