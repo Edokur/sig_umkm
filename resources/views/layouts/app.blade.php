@@ -14,9 +14,7 @@
     
         <!-- Custom fonts for this template-->
         <link href="{{ asset('admin_assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-        <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     
         <!-- Custom styles for this template-->
         <link href="{{ asset('admin_assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -25,15 +23,8 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> --}}
-        
-        {{-- <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' /> --}}
         <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
-
-        {{-- rute lokasi --}}
-        {{-- <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
-        <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" type="text/css"> --}}
 
         {{-- searching lokasi --}}
         <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
@@ -43,10 +34,7 @@
     </head>
 
     <body id="page-top">
-        <div id="wrapper">
-            {{-- <div class="wrapper"> --}}
-            {{-- <div class="navbar-bg"></div> --}}
-            
+        <div id="wrapper">            
             @include('partials.sidebar')
             <!-- Main Content -->
             <div id="content-wrapper" class="d-flex flex-column">
@@ -82,19 +70,18 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Siap untuk Pergi?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-body">Pilih "Keluar" di bawah jika Anda siap untuk mengakhiri sesi Anda saat ini.</div>
                     <div class="modal-footer">
                         <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" type="submit">Logout</button>
+                        <button class="btn btn-primary" type="submit">Keluar</button>
                         </form>
-                        {{-- <a class="btn btn-primary" href="login.html">Logout</a> --}}
                     </div>
                 </div>
             </div>
@@ -102,7 +89,7 @@
 
         {{-- General Script  --}}
 
-            <!-- Bootstrap core JavaScript-->
+        <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('admin_assets/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('admin_assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -115,19 +102,10 @@
         <!-- Page level plugins -->
         <script src="{{ asset('admin_assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('admin_assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-
-        <!-- Page level plugins -->
-        {{-- <script src="{{ asset('admin_assets/vendor/chart.js/Chart.min.js') }}"></script> --}}
-
-        <!-- Page level custom scripts -->
-        {{-- <script src="{{ asset('admin_assets/js/demo/chart-area-demo.js') }}"></script> --}}
-        {{-- <script src="{{ asset('admin_assets//js/demo/chart-pie-demo.js') }}"></script> --}}
-        {{-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
         <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
-        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> --}}
         <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
         <script>
             @if(Session::has('message'))

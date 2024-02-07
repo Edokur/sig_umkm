@@ -3,67 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Location;
+use App\Models\Umkm;
 
 class MapController extends Controller
 {
 
-    /* public function index()
-    {
-        $this->loadlocations();
-        return view('map');
-    } */
     public function index()
     {
-        $locations = Location::orderBy('created_at', 'desc')->get();
-        // dd($locations);
+        $locations = Umkm::orderBy('created_at', 'desc')->get();
 
         $customLocations = [];
 
         foreach ($locations as $location) {
             $customLocations[] = [
                 'type' => 'Feature',
-                'geometry' => [
-                    'coordinates' => [$location->long, $location->lat],
-                    'type' => 'point'
+                'filter' => [
+                    'klasifikasiFilter' => 'null',
+                    'kategoriFilter' => 'null',
+                    'kecamatanFilter' => 'null'
                 ],
-                'properties' => [
-                    'locationId' => $location->id,
-                    'title' => $location->title,
-                    'image' => $location->image,
-                    'description' => $location->description,
-                ]
-            ];
-        }
-
-        $geoLocation = [
-            'type' => 'FeatureCollection',
-            'features' => $customLocations
-        ];
-
-        $geoJson = collect($geoLocation)->toJson();
-
-        return view('map', ['geoJson' => $geoJson]);
-    }
-
-    public function location()
-    {
-        $locations = Location::orderBy('created_at', 'desc')->get();
-        // dd($locations);
-
-        $customLocations = [];
-
-        foreach ($locations as $location) {
-            $customLocations[] = [
-                'type' => 'Feature',
                 'geometry' => [
                     'coordinates' => [$location->longtitude, $location->lattitude],
                     'type' => 'point'
                 ],
                 'properties' => [
                     'locationId' => $location->id,
-                    'nama_pemilik' => $location->nama_pemilik,
-                    'nama_usaha' => $location->nama_usaha,
+                    'pemilik' => $location->pemilik,
+                    'nama_umkm' => $location->nama_umkm,
                     'no_hp' => $location->no_hp,
                     'kegiatan_usaha' => $location->kegiatan_usaha,
                     'klasifikasi_usaha' => $location->klasifikasi_usaha,
@@ -81,19 +47,20 @@ class MapController extends Controller
 
         $geoJson = collect($geoLocation)->toJson();
 
-        // dd(json_decode($geoJson));
         $geoArray = [];
         foreach ($locations as $locationarray) {
             $geoArray[] = [
                 'locationId' => $locationarray->id,
-                'nama_pemilik' => $locationarray->nama_pemilik,
-                'nama_usaha' => $locationarray->nama_usaha,
+                'pemilik' => $locationarray->pemilik,
+                'nama_umkm' => $locationarray->nama_umkm,
                 'no_hp' => $locationarray->no_hp,
                 'kegiatan_usaha' => $locationarray->kegiatan_usaha,
                 'klasifikasi_usaha' => $locationarray->klasifikasi_usaha,
                 'jenis_produk' => $locationarray->jenis_produk,
                 'alamat' => $locationarray->alamat,
                 'kecamatan' => $locationarray->kecamatan,
+                'longtitude' => $locationarray->longtitude,
+                'lattitude' => $locationarray->lattitude,
                 'coordinates' => [$locationarray->longtitude, $locationarray->lattitude],
                 'type' => 'point'
             ];
@@ -103,97 +70,123 @@ class MapController extends Controller
             'guest.location',
             [
                 'geoJson' => $geoJson,
-                'geoArray' => $geoArray
+                'geoArray' => $geoArray,
+                'filter' => null
             ]
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function loadallLocations()
     {
-        //
-    }
+        $locations = Umkm::orderBy('created_at', 'desc')->get();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // dd($request);
+        $customLocations = [];
 
-        $request->validate([
-            'Longtitude' => 'required',
-            'Lattitude' => 'required',
-            'title' => 'required',
-            'description' => 'required',
-            'image' => 'image|max:2048|required',
-        ]);
-
-        $location = new Location();
-        $location->long = $request->input('Longtitude');
-        $location->lat = $request->input('Lattitude');
-        $location->title = $request->input('title');
-        $location->description = $request->input('description');
-        if ($request->hasfile('image')) {
-            $file = $request->file('image');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extention;
-            $file->move('uploads/image/', $filename);
-            $location->image = $filename;
+        foreach ($locations as $location) {
+            $customLocations[] = [
+                'type' => 'Feature',
+                'filter' => [
+                    'klasifikasiFilter' => 'null',
+                    'kategoriFilter' => 'null',
+                    'kecamatanFilter' => 'null'
+                ],
+                'geometry' => [
+                    'coordinates' => [$location->longtitude, $location->lattitude],
+                    'type' => 'point'
+                ],
+                'properties' => [
+                    'locationId' => $location->id,
+                    'pemilik' => $location->pemilik,
+                    'nama_umkm' => $location->nama_umkm,
+                    'no_hp' => $location->no_hp,
+                    'kegiatan_usaha' => $location->kegiatan_usaha,
+                    'klasifikasi_usaha' => $location->klasifikasi_usaha,
+                    'jenis_produk' => $location->jenis_produk,
+                    'alamat' => $location->alamat,
+                    'kecamatan' => $location->kecamatan,
+                ]
+            ];
         }
-        $location->save();
-        return redirect()->back()->with('status', 'Location Added Successfully');
+
+        $geoLocation = [
+            'type' => 'FeatureCollection',
+            'features' => $customLocations
+        ];
+
+        $geoJson = collect($geoLocation)->toJson();
+        return response()->json(['geoJson' => $geoJson]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function filterLocations(Request $request)
     {
-        //
-    }
+        $kecamatanFilter = $request->input('kecamatanFilter');
+        $klasifikasiFilter = $request->input('klasifikasi_usaha');
+        $kategoriFilter = $request->input('kategori');
+        $searchUmkm = $request->input('searchUmkm');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        // Lakukan logika penyaringan data sesuai dengan parameter yang diterima
+        $query = Umkm::query();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        // Periksa apakah klasifikasi_usaha diisi atau tidak
+        if ($klasifikasiFilter) {
+            $query->where('klasifikasi_usaha', $klasifikasiFilter);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        // Periksa apakah jenis_produk diisi atau tidak
+        if ($kategoriFilter) {
+            $query->where('jenis_produk', $kategoriFilter);
+        }
+
+        // Periksa apakah kecamatan diisi atau tidak
+        if ($kecamatanFilter) {
+            $query->where('kecamatan', $kecamatanFilter);
+        }
+
+        // Periksa apakah searchUmkm diisi atau tidak
+        if ($searchUmkm) {
+            $query->where('nama_umkm', 'like', '%' . $searchUmkm . '%');
+        }
+
+        // Ambil data yang sudah disaring
+        $filteredData = $query->get();
+
+        // Format data sebagai GeoJSON
+        $customLocations = [];
+        foreach ($filteredData as $location) {
+            $customLocations[] = [
+                'type' => 'Feature',
+                'filter' => [
+                    'klasifikasiFilter' => $klasifikasiFilter,
+                    'kategoriFilter' => $kategoriFilter,
+                    'kecamatanFilter' => $kecamatanFilter,
+                    'searchUmkm' => $searchUmkm,
+                ],
+                'geometry' => [
+                    'coordinates' => [$location->longtitude, $location->lattitude],
+                    'type' => 'point'
+                ],
+                'properties' => [
+                    'locationId' => $location->id,
+                    'pemilik' => $location->pemilik,
+                    'nama_umkm' => $location->nama_umkm,
+                    'no_hp' => $location->no_hp,
+                    'kegiatan_usaha' => $location->kegiatan_usaha,
+                    'klasifikasi_usaha' => $location->klasifikasi_usaha,
+                    'jenis_produk' => $location->jenis_produk,
+                    'alamat' => $location->alamat,
+                    'kecamatan' => $location->kecamatan,
+                ],
+
+            ];
+        }
+
+        $geoLocation = [
+            'type' => 'FeatureCollection',
+            'features' => $customLocations
+        ];
+
+        $geoJson = collect($geoLocation)->toJson();
+
+        return response()->json(['geoJsonFilter' => $geoJson]);
     }
 }

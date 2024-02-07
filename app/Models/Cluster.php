@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kecamatan extends Model
+class Cluster extends Model
 {
     use HasFactory;
 
-    protected $table = "kecamatan";
+    protected $table = "cluster";
     protected $guarded = [];
 
     protected $fillable = [
-        'nama_kecamatan'
+        'nama_cluster',
     ];
 }

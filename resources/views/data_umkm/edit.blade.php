@@ -29,10 +29,10 @@
                 Form Edit
             </div>
             <div class="card-body">
-                @foreach ($locations as $item)
+                @foreach ($umkms as $item)
                     <form action="{{ route('data_umkm.update') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="id_location" value="{{ $item->id }}">
+                        <input type="hidden" name="id_umkm" value="{{ $item->id }}">
                         <div class="row">
                             <div class="col">
                                 <label for="Longtitude">Longtitude</label>
@@ -50,28 +50,32 @@
                             </div>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="">Nama Pemilik</label>
-                            <input type="text" class="form-control mt-1" placeholder="Nama Pemilik" name="nama_pemilik" value="{{ $item->nama_pemilik }}">
-                            @error('nama_pemilik')
+                            <label for="">Pemilik</label>
+                            <input type="text" class="form-control mt-1" placeholder="Pemilik" name="pemilik" value="{{ $item->pemilik }}">
+                            @error('pemilik')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="">Nama Toko</label>
-                            <input type="text" class="form-control mt-1" placeholder="Nama Toko" name="nama_usaha" value="{{ $item->nama_usaha }}">
-                            @error('nama_usaha')
+                            <label for="">Nama UMKM</label>
+                            <input type="text" class="form-control mt-1" placeholder="Nama UMKM" name="nama_umkm" value="{{ $item->nama_umkm }}">
+                            @error('nama_umkm')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
                             <label for="">Jenis Produk</label>
-                            <select class="custom-select custom-select-sm" name="jenis_produk">
+                            <select class="custom-select" name="jenis_produk">
                                 <option value="{{ $item->jenis_produk }}" selected>{{ $item->jenis_produk }}</option>
+                                <option value="Furnitur Dekorasi dan Kerajinan">Furnitur Dekorasi dan Kerajinan</option>
                                 <option value="Makanan Siap Saji dan Minuman Segar">Makanan Siap Saji dan Minuman Segar</option>
                                 <option value="Makanan Kemasan dan Frozen">Makanan Kemasan dan Frozen</option>
                                 <option value="Kue Desert dan Camilan">Kue Desert dan Camilan</option>
                                 <option value="Fashion dan Aksesoris">Fashion dan Aksesoris</option>
                                 <option value="Sambal Bumbu dan Kebutuhan Rumah Tangga">Sambal Bumbu dan Kebutuhan Rumah Tangga</option>
+                                <option value="Pertanian Buah dan Tanaman">Pertanian Buah dan Tanaman</option>
+                                <option value="Herbal Kesehatan dan Kecantikan">Herbal Kesehatan dan Kecantikan</option>
+                                <option value="Kain Batik Jumputan dan Eco Printing">Kain Batik Jumputan dan Eco Printing</option>
                                 <option value="Jasa dan Lain-lain">Jasa dan Lain-lain</option>
                             </select>
                             @error('jenis_produk')
@@ -84,9 +88,46 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">+62</div>
                                 </div>
-                                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="No HP" name="no_hp" value="{{ $item->no_hp }}">
+                                <input type="number" class="form-control" id="inlineFormInputGroup" placeholder="No HP" name="no_hp" value="{{ $item->no_hp }}">
                             </div>
                             @error('no_hp')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="">Kecamatan</label>
+                            <select class="custom-select" name="kecamatan">
+                                <option value="{{ $item->kecamatan }}" selected>{{ $item->kecamatan }}</option>
+                                <option value="GONDOKUSUMAN">GONDOKUSUMAN</option>
+                                <option value="WIROBRAJAN">WIROBRAJAN</option>
+                                <option value="TEGALREJO">TEGALREJO</option>
+                                <option value="KOTAGEDE">KOTAGEDE</option>
+                                <option value="KRATON">KRATON</option>
+                                <option value="GONDOMANAN">GONDOMANAN</option>
+                                <option value="UMBULHARJO">UMBULHARJO</option>
+                                <option value="PAKUALAMAN">PAKUALAMAN</option>
+                                <option value="JETIS">JETIS</option>
+                                <option value="MANTRIJERON">MANTRIJERON</option>
+                                <option value="MERGANGSAN">MERGANGSAN</option>
+                                <option value="NGAMPILAN">NGAMPILAN</option>
+                                <option value="DANUREJAN">DANUREJAN</option>
+                                <option value="GEDONGTENGEN">GEDONGTENGEN</option>
+                            </select>
+                            @error('kecamatan')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="">Omset Per tahun</label>
+                            <input type="number" class="form-control mt-1" placeholder="Rp 100.000.000" name="omset" value="{{ $item->omset }}">
+                            @error('omset')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="">Asset Perusahaan</label>
+                            <input type="number" class="form-control mt-1 " placeholder="Rp 100.000.000" name="asset" value="{{ $item->asset }}">
+                            @error('asset')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -96,36 +137,6 @@
                             @error('kegiatan_usaha')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="">Klasifikasi Usaha</label>
-                                    <select class="custom-select custom-select-sm" name="klasifikasi_usaha">
-                                        <option value="{{ $item->klasifikasi_usaha }}" selected>{{ $item->klasifikasi_usaha }}</option>
-                                        <option value="MIKRO">MIKRO</option>
-                                        <option value="KECIL">KECIL</option>
-                                        <option value="MENENGAH">MENENGAH</option>
-                                    </select>
-                                    @error('klasifikasi_usaha')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="">Kecamatan</label>
-                                    <select class="custom-select custom-select-sm" name="kecamatan">
-                                        <option value="{{ $item->kecamatan }}" selected>{{ $item->kecamatan }}</option>
-                                        <option value="GONDOKUSUMAN">GONDOKUSUMAN</option>
-                                        <option value="WIROBRAJAN">WIROBRAJAN</option>
-                                        <option value="TEGALREJO">TEGALREJO</option>
-                                    </select>
-                                    @error('kecamatan')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
                         <div class="form-group mt-2">
                             <label for="">Alamat</label>
@@ -148,15 +159,7 @@
 @endsection
 @push('script')
     <script>
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
-            }
-        };
-
-        const defaultLocation = [{!! $locations[0]->longtitude !!}, {!! $locations[0]->lattitude !!}];
+        const defaultLocation = [{!! $umkms[0]->longtitude !!}, {!! $umkms[0]->lattitude !!}];
 
         mapboxgl.accessToken = '{{ env('MAP_KEY') }}';
         var map = new mapboxgl.Map({
@@ -169,12 +172,20 @@
         const loadLocations = (geoJson) => {
             geoJson.features.forEach((location) => {
                 const {geometry, properties} = location
-                const {iconSize, locationId, nama_usaha, jenis_produk,} = properties
+                const {iconSize, umkmId, nama_umkm, jenis_produk, klasifikasi_usaha} = properties
 
                 let markerElement = document.createElement('div')
-                markerElement.className = 'marker' + locationId
-                markerElement.id = locationId
-                markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location.png') !!})'
+                markerElement.className = 'marker' + umkmId
+                markerElement.id = umkmId
+                if (klasifikasi_usaha == 'Usaha Mikro') {
+                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_merah.png') !!})'
+                } else if(klasifikasi_usaha == 'Usaha Kecil'){
+                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_kuning.png') !!})'
+                }else if(klasifikasi_usaha == 'Usaha Menengah'){
+                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_hijau.png') !!})'
+                }else{
+                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_merah.png') !!})'
+                }
                 markerElement.style.backgroundSize = 'cover'
                 markerElement.style.width = '50px'
                 markerElement.style.height = '50px'
@@ -190,14 +201,14 @@
         map.addControl(new mapboxgl.NavigationControl())
         map.addControl(new mapboxgl.FullscreenControl())
 
-        map.on('click', (e) => {
-            const longtitude = e.lngLat.lng
-            const lattitude = e.lngLat.lat
+        // map.on('click', (e) => {
+        //     const longtitude = e.lngLat.lng
+        //     const lattitude = e.lngLat.lat
 
-            console.log({longtitude,lattitude});
-            $("#Longtitude").val(longtitude);
-            $("#Lattitude").val(lattitude);
-        })
+        //     console.log({longtitude,lattitude});
+        //     $("#Longtitude").val(longtitude);
+        //     $("#Lattitude").val(lattitude);
+        // })
         
     </script> 
 @endpush

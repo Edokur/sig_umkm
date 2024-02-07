@@ -48,28 +48,32 @@
                         </div>
                     </div>
                     <div class="form-group mt-3">
-                        <label for="">Nama Pemilik</label>
-                        <input type="text" class="form-control mt-1" placeholder="Nama Pemilik" name="nama_pemilik">
-                        @error('nama_pemilik')
+                        <label for="">Pemilik</label>
+                        <input type="text" class="form-control mt-1" placeholder="Pemilik" name="pemilik">
+                        @error('pemilik')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group mt-3">
-                        <label for="">Nama Toko</label>
-                        <input type="text" class="form-control mt-1" placeholder="Nama Toko" name="nama_usaha">
-                        @error('nama_usaha')
+                        <label for="">Nama UMKM</label>
+                        <input type="text" class="form-control mt-1" placeholder="Nama UMKM" name="nama_umkm">
+                        @error('nama_umkm')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="form-group mt-3">
                         <label for="">Jenis Produk</label>
-                        <select class="custom-select custom-select-sm" name="jenis_produk">
+                        <select class="custom-select" name="jenis_produk">
                             <option selected>Open this select menu</option>
+                            <option value="Furnitur Dekorasi dan Kerajinan">Furnitur Dekorasi dan Kerajinan</option>
                             <option value="Makanan Siap Saji dan Minuman Segar">Makanan Siap Saji dan Minuman Segar</option>
                             <option value="Makanan Kemasan dan Frozen">Makanan Kemasan dan Frozen</option>
                             <option value="Kue Desert dan Camilan">Kue Desert dan Camilan</option>
                             <option value="Fashion dan Aksesoris">Fashion dan Aksesoris</option>
                             <option value="Sambal Bumbu dan Kebutuhan Rumah Tangga">Sambal Bumbu dan Kebutuhan Rumah Tangga</option>
+                            <option value="Pertanian Buah dan Tanaman">Pertanian Buah dan Tanaman</option>
+                            <option value="Herbal Kesehatan dan Kecantikan">Herbal Kesehatan dan Kecantikan</option>
+                            <option value="Kain Batik Jumputan dan Eco Printing">Kain Batik Jumputan dan Eco Printing</option>
                             <option value="Jasa dan Lain-lain">Jasa dan Lain-lain</option>
                         </select>
                         @error('jenis_produk')
@@ -89,41 +93,48 @@
                         @enderror
                     </div>
                     <div class="form-group mt-3">
+                        <label for="">Kecamatan</label>
+                        <select class="custom-select" name="kecamatan">
+                            <option selected>Open this select menu</option>
+                            <option value="GONDOKUSUMAN">GONDOKUSUMAN</option>
+                            <option value="WIROBRAJAN">WIROBRAJAN</option>
+                            <option value="TEGALREJO">TEGALREJO</option>
+                            <option value="KOTAGEDE">KOTAGEDE</option>
+                            <option value="KRATON">KRATON</option>
+                            <option value="GONDOMANAN">GONDOMANAN</option>
+                            <option value="UMBULHARJO">UMBULHARJO</option>
+                            <option value="PAKUALAMAN">PAKUALAMAN</option>
+                            <option value="JETIS">JETIS</option>
+                            <option value="MANTRIJERON">MANTRIJERON</option>
+                            <option value="MERGANGSAN">MERGANGSAN</option>
+                            <option value="NGAMPILAN">NGAMPILAN</option>
+                            <option value="DANUREJAN">DANUREJAN</option>
+                            <option value="GEDONGTENGEN">GEDONGTENGEN</option>
+                        </select>
+                        @error('kecamatan')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="">Omset Per tahun</label>
+                        <input type="number" class="form-control mt-1" placeholder="Rp 100.000.000" name="omset">
+                        @error('omset')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="">Asset Perusahaan</label>
+                        <input type="number" class="form-control mt-1 " placeholder="Rp 100.000.000" name="asset">
+                        @error('asset')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group mt-3">
                         <label for="">Kegiatan Usaha</label>
                         <input type="text" class="form-control mt-1" placeholder="Kegiatan Usaha" name="kegiatan_usaha">
                         @error('kegiatan_usaha')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="">Klasifikasi Usaha</label>
-                                <select class="custom-select custom-select-sm" name="klasifikasi_usaha">
-                                    <option selected>Open this select menu</option>
-                                    <option value="MIKRO">MIKRO</option>
-                                    <option value="KECIL">KECIL</option>
-                                    <option value="MENENGAH">MENENGAH</option>
-                                </select>
-                                @error('klasifikasi_usaha')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="">Kecamatan</label>
-                                <select class="custom-select custom-select-sm" name="kecamatan">
-                                    <option selected>Open this select menu</option>
-                                    <option value="GONDOKUSUMAN">GONDOKUSUMAN</option>
-                                    <option value="WIROBRAJAN">WIROBRAJAN</option>
-                                    <option value="TEGALREJO">TEGALREJO</option>
-                                </select>
-                                @error('kecamatan')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
                     </div>
                     <div class="form-group mt-2">
                         <label for="">Alamat</label>
@@ -133,7 +144,7 @@
                         @enderror
                     </div>
                     <div class="d-grid gap-2 mt-4">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -145,14 +156,6 @@
 @endsection
 @push('script')
     <script>
-        var loadFile = function(event) {
-            var output = document.getElementById('output');
-            output.src = URL.createObjectURL(event.target.files[0]);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src) // free memory
-            }
-        };
-
         const defaultLocation = [110.3652040575596, -7.801623569777348];
 
         mapboxgl.accessToken = '{{ env('MAP_KEY') }}';

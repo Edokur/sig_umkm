@@ -10,21 +10,11 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Nav Item - Dashboard -->
-    {{-- <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-    </li> --}}
-
-    <!-- Divider -->
-    {{-- <hr class="sidebar-divider"> --}}
+    <hr class="sidebar-divider">
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        DASHBOARD
+        MENU
     </div>
     <!-- Nav Item - Charts -->
     <li class="nav-item {{ ($title == 'Dashboard') ? 'active' : '' }}">
@@ -34,6 +24,20 @@
     </li>
 
     <!-- Nav Item - Tables -->
+    {{-- <li class="nav-item {{ ($title == 'Data Cluster') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('data_cluster') }}">
+            <i class="fas fa-clone"></i>
+            <span>Data Cluster</span></a>
+    </li> --}}
+
+    <!-- Nav Item - Tables -->
+    {{-- <li class="nav-item {{ ($title == 'Variabel Penilaian') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('data_variabel') }}">
+            <i class="fas fa-layer-group"></i>
+            <span>Variabel Penilaian</span></a>
+    </li> --}}
+
+    <!-- Nav Item - Tables -->
     <li class="nav-item {{ ($title == 'Data UMKM') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('data_umkm') }}">
             <i class="fas fa-store-alt"></i>
@@ -41,10 +45,17 @@
     </li>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item {{ ($title == 'UMKM GIS') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('data_gis') }}">
-            <i class="fas fa-map-marked-alt"></i>
-            <span>UMKM GIS</span></a>
+    <li class="nav-item {{ ($title == 'Penilaian Kmeans') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('data_kmeans') }}">
+            <i class="fas fa-cube"></i>
+            <span>Penilaian Kmeans</span></a>
+    </li>
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item {{ ($title == 'Laporan Hasil') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('hasil') }}">
+            <i class="fas fa-circle-notch"></i>
+            <span>Laporan Hasil</span></a>
     </li>
 
     <!-- Divider -->
