@@ -31,14 +31,38 @@
                 </thead>
                 <tbody>
                     <?php
+                    ini_set('memory_limit', '2056M');
                         $no = 1;
-                        foreach ($data as $key => $value) {
-
+                        foreach ($v_umkm1 as $key => $value) {
                             echo "<tr>";
                             echo "<td>" . $no++ . "</td>";
-                            echo "<td>" . $value['nama_umkm'] . "</td>";
-                            echo "<td>" . $value[0] . "</td>";
-                            echo "<td>" . $value[1] . "</td>";
+                            echo "<td>" . $value->nama_umkm . "</td>";
+                            echo "<td>" . $value->norma_omset . "</td>";
+                            echo "<td>" . $value->norma_asset . "</td>";
+                            echo "</tr>";
+                        }
+                        foreach ($v_umkm2 as $key => $value) {
+                            echo "<tr>";
+                            echo "<td>" . $no++ . "</td>";
+                            echo "<td>" . $value->nama_umkm . "</td>";
+                            echo "<td>" . $value->norma_omset . "</td>";
+                            echo "<td>" . $value->norma_asset . "</td>";
+                            echo "</tr>";
+                        }
+                        foreach ($v_umkm3 as $key => $value) {
+                            echo "<tr>";
+                            echo "<td>" . $no++ . "</td>";
+                            echo "<td>" . $value->nama_umkm . "</td>";
+                            echo "<td>" . $value->norma_omset . "</td>";
+                            echo "<td>" . $value->norma_asset . "</td>";
+                            echo "</tr>";
+                        }
+                        foreach ($v_umkm as $key => $value) {
+                            echo "<tr>";
+                            echo "<td>" . $no++ . "</td>";
+                            echo "<td>" . $value->nama_umkm . "</td>";
+                            echo "<td>" . $value->norma_omset . "</td>";
+                            echo "<td>" . $value->norma_asset . "</td>";
                             echo "</tr>";
                         }
                     ?>
@@ -208,7 +232,6 @@
                 $nilrat3 = [];
 
                 foreach ($nilai_rata as $key => $value) {
-
                     $nilrat1[] = $value[0];
                     $nilrat2[] = $value[1];
                     $nilrat3[] = $value[2];
@@ -304,7 +327,7 @@
                                     <td><?= number_format(isset($value13['jarak_centroid'][0]) ? $value13['jarak_centroid'][0] : '', 2, ',', '.'); ?></td>
                                     <td><?= number_format(isset($value13['jarak_centroid'][1]) ? $value13['jarak_centroid'][1] : '', 2, ',', '.'); ?></td>
                                     <td><?= number_format(isset($value13['jarak_centroid'][2]) ? $value13['jarak_centroid'][2] : '', 2, ',', '.'); ?></td>
-                                    <td><?= isset($value13['jarak_terdekat']) ? $value13['jarak_terdekat'] : ''; ?></td>
+                                    <td><?= number_format(isset($value13['jarak_terdekat']) ? $value13['jarak_terdekat'] : ''); ?></td>
                                     <td><?= isset($value13['cluster']) ? $value13['cluster'] : ''; ?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -348,13 +371,25 @@
             <?php
 
                 // memanggil function cluster baru
+                // dd($cls);
+                // dd($centroid_baru);
+                // dd($centroid, $centroid_b);
+                // dd($nilai_rata);
                 $cluster_baru = ClusterBaru($cls, $iterasi);
-
-                if (!$cluster_baru) {
+                $centroid_new = CentroidNew($centroid, $iterasi);
+                // dd($centroid_new);
+                // dd($cluster_baru);
+                if (!$centroid_new) {
 
                     // berhenti
                     break;
                 }
+                // if (!$cluster_baru) {
+
+                //     // berhenti
+                //     break;
+                // }
+                // dd($cluster_baru);
             }
 
             ?>

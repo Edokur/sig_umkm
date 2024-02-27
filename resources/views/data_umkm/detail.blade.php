@@ -120,7 +120,7 @@
                 }else if(klasifikasi_usaha == 'Usaha Menengah'){
                     markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_hijau.png') !!})'
                 }else{
-                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_merah.png') !!})'
+                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_orange.png') !!})'
                 }
                 markerElement.style.backgroundSize = 'cover'
                 markerElement.style.width = '50px'

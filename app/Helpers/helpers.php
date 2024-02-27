@@ -16,12 +16,28 @@ if (!function_exists('CentroidAwal')) {
     // fungsi untuk membuat atau mengambil nilai acak centroid pada data
     function CentroidAwal($data, $centroid)
     {
-        for ($i = 0; $i < $centroid; $i++) {
-            $ctr[] = [
-                $data[$i][0],
-                $data[$i][1],
-            ];
-        }
+        // dd($data);
+        $ctr = array(
+            0 => array(
+                0 => "1",
+                1 => "1"
+            ),
+            1 => array(
+                0 => "1",
+                1 => "2"
+            ),
+            2 => array(
+                0 => "2",
+                1 => "3"
+            ),
+        );
+        // dd($ctr);
+        // for ($i = 0; $i < $centroid; $i++) {
+        //     $ctr[] = [
+        //         $data[$i][0],
+        //         $data[$i][1],
+        //     ];
+        // }
         // mengembalikan nilai atau hasil
         return $ctr;
     }
@@ -108,13 +124,49 @@ if (!function_exists('CentroidBaru')) {
     }
 }
 
+if (!function_exists('CentroidNew')) {
+    // untuk mengambil hasil centroid baru
+    function CentroidNew(array $centroid_new, $iterasi)
+    {
+        // Periksa apakah indeks ada di array $cluster
+        if (!array_key_exists($iterasi - 1, $centroid_new) || !array_key_exists($iterasi, $centroid_new)) {
+            return false; // Atau tangani kesalahan yang sesuai
+        }
+
+        // mengambil centroid lama
+        $centroid_lama = flatten_array($centroid_new[($iterasi - 1)]);
+
+        // mengambil centroid baru
+        $centroid_baru = flatten_array($centroid_new[$iterasi]);
+
+        $jumlah_sama   = 0;
+
+        for ($i = 0; $i < count($centroid_lama); $i++) {
+
+            if ($centroid_lama[$i] === $centroid_baru[$i]) {
+
+                $jumlah_sama++;
+            }
+        }
+
+        // mengambilkan nilai atau hasil
+        return $jumlah_sama === count($centroid_lama) ? false : true;
+    }
+}
+
 if (!function_exists('ClusterBaru')) {
     // untuk menentukan sampai cluster sama lalu berhenti
     function ClusterBaru(array $cluster, $iterasi)
     {
 
+        // Periksa apakah indeks ada di array $cluster
+        if (!array_key_exists($iterasi - 1, $cluster) || !array_key_exists($iterasi, $cluster)) {
+            return false; // Atau tangani kesalahan yang sesuai
+        }
+
         // mengambil centroid lama
         $centroid_lama = flatten_array($cluster[($iterasi - 1)]);
+
         // mengambil centroid baru
         $centroid_baru = flatten_array($cluster[$iterasi]);
 

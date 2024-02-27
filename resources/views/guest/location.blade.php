@@ -14,6 +14,10 @@
         <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
 
+        {{-- Legend  --}}
+        <script src='https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v3.1.0/mapbox-gl.css' rel='stylesheet' />
+
         {{-- rute lokasi --}}
         <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
         <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" type="text/css">
@@ -21,7 +25,9 @@
         {{-- searching lokasi --}}
         <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
         <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
-        
+
+        {{-- Custom CSS  --}}
+        <link rel="stylesheet" href="{{ asset('css/guest.css') }}">
         
     </head>
     <body class="font-sans antialiased">
@@ -32,11 +38,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        {{-- menampilkan map  --}}
                         <div class="col-md-8">
                             <div id='map' style='width: 100%; height: 90vh;'></div>
+                            <div class='map-overlay' id='legend'></div>
                         </div>
                         <div class="col-md-4">
                             <div class="mt-4" style="width:100%;">
+                                {{-- filter yang dapat digunakan  --}}
                                 <div class="card">
                                     <div class="card-body">
                                         <form action="" class="mt-5" id="filterForm">
@@ -102,6 +111,7 @@
                                     </div>
                                 </div>
 
+                                {{-- detail dari data umkm  --}}
                                 @foreach ($geoArray as $item)
                                     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar_{{ $item['locationId'] }}" aria-labelledby="offcanvasExampleLabel">
                                         <div class="offcanvas-header">
@@ -170,7 +180,7 @@
         <script src="{{ asset('js/guest.js') }}"></script>
 
         <script>
-            
+            // menampilkan default lokasi map 
             const defaultLocation = [110.3652040575596, -7.801623569777348];
 
             mapboxgl.accessToken = '{{ env('MAP_KEY') }}';
@@ -178,7 +188,6 @@
                 container: 'map',
                 center: defaultLocation,
                 zoom: 13,
-                // style: 'mapbox://styles/mapbox/standard'
                 style: 'mapbox://styles/mapbox/streets-v12'
             });
 
@@ -195,6 +204,35 @@
                     showUserHeading: true
                 })
             );
+
+            map.on('load', () => {
+            // the rest of the code will go in here
+                const layers = [
+                    'Belum DiKlasifikasi',
+                    'Usaha Mikro',
+                    'Usaha Kecil',
+                    'Usaha Menengah',
+                    ];
+                    const colors = [
+                    '#E88A18',
+                    '#FD003A',
+                    '#FEE203',
+                    '#18E727',
+                ];
+                layers.forEach((layer, i) => {
+                    const color = colors[i];
+                    const item = document.createElement('div');
+                    const key = document.createElement('span');
+                    key.className = 'legend-key';
+                    key.style.backgroundColor = color;
+
+                    const value = document.createElement('span');
+                    value.innerHTML = `${layer}`;
+                    item.appendChild(key);
+                    item.appendChild(value);
+                    legend.appendChild(item);
+                    });
+                });
 
             const geocoder = new MapboxGeocoder({
                 accessToken: mapboxgl.accessToken,
@@ -229,6 +267,7 @@
                     }
                 });
             }
+            
 
             function applyFilter() {
                 const klasifikasiFilter = document.getElementById('klasifikasiFilter').value;

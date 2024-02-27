@@ -22,7 +22,6 @@ class ProfileController extends Controller
 
     public function changepassword(Request $request)
     {
-        // dd($request);
         $id = $request->idUser;
 
         $request->validate([

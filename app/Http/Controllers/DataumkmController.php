@@ -135,6 +135,7 @@ class DataumkmController extends Controller
                     'nama_umkm' => $umkm->nama_umkm,
                     'no_hp' => $umkm->no_hp,
                     'kegiatan_usaha' => $umkm->kegiatan_usaha,
+                    'klasifikasi_usaha' => $umkm->klasifikasi_usaha,
                     'jenis_produk' => $umkm->jenis_produk,
                     'alamat' => $umkm->alamat,
                     'kecamatan' => $umkm->kecamatan,
@@ -191,6 +192,7 @@ class DataumkmController extends Controller
                     'nama_umkm' => $umkm->nama_umkm,
                     'no_hp' => $umkm->no_hp,
                     'kegiatan_usaha' => $umkm->kegiatan_usaha,
+                    'klasifikasi_usaha' => $umkm->klasifikasi_usaha,
                     'jenis_produk' => $umkm->jenis_produk,
                     'alamat' => $umkm->alamat,
                     'kecamatan' => $umkm->kecamatan,
@@ -230,12 +232,30 @@ class DataumkmController extends Controller
             'kecamatan' => 'required',
         ]);
 
-
         $no_hp = $request->input('no_hp');
 
         $cut = substr($no_hp, 2);
 
         $use_noHp = '62' . $cut;
+
+        $omset = $request->input('omset');
+        $asset = $request->input('asset');
+
+        if ($omset > 0 && $omset <= 300000000) {
+            $norma_omset = 1;
+        } else if ($omset > 300000000 && $omset <= 2500000000) {
+            $norma_omset = 2;
+        } elseif ($omset > 2500000000 && $omset <= 50000000000) {
+            $norma_omset = 3;
+        }
+
+        if ($asset > 0 && $asset <= 50000000) {
+            $norma_asset = 1;
+        } else if ($asset > 50000000 && $asset <= 500000000) {
+            $norma_asset = 2;
+        } elseif ($asset > 500000000 && $asset <= 10000000000) {
+            $norma_asset = 3;
+        }
 
         try {
             $data = DB::table('umkm')
@@ -249,7 +269,12 @@ class DataumkmController extends Controller
                     'kegiatan_usaha' => $request->input('kegiatan_usaha'),
                     'jenis_produk' => $request->input('jenis_produk'),
                     'alamat' => $request->input('alamat'),
-                    'kecamatan' => $request->input('kecamatan')
+                    'kecamatan' => $request->input('kecamatan'),
+                    'omset' => $omset,
+                    'asset' => $asset,
+                    'norma_omset' => $norma_omset,
+                    'norma_asset' => $norma_asset,
+
                 ]);
             return redirect()->route('data_umkm')->with('message', 'Data Berhasil Diperbarui');
         } catch (\Throwable $th) {

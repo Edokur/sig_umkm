@@ -174,6 +174,7 @@
                 const {geometry, properties} = location
                 const {iconSize, umkmId, nama_umkm, jenis_produk, klasifikasi_usaha} = properties
 
+                console.log(klasifikasi_usaha)
                 let markerElement = document.createElement('div')
                 markerElement.className = 'marker' + umkmId
                 markerElement.id = umkmId
@@ -184,7 +185,7 @@
                 }else if(klasifikasi_usaha == 'Usaha Menengah'){
                     markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_hijau.png') !!})'
                 }else{
-                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_merah.png') !!})'
+                    markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_orange.png') !!})'
                 }
                 markerElement.style.backgroundSize = 'cover'
                 markerElement.style.width = '50px'

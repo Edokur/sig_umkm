@@ -30,34 +30,58 @@
         <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
         <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
         
-    
+        <style>
+            #wrapper {
+            display: flex;
+            flex-direction: row;
+        }
+        #accordionSidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1000;
+            width: 250px;
+            overflow-y: auto;
+            background-color: #333;
+            color: #fff;
+            padding-top: 60px; /* Sesuaikan dengan tinggi navbar */
+        }
+        #content-wrapper {
+            flex: 1;
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            padding: 20px;
+        }
+
+        </style>
     </head>
 
     <body id="page-top">
         <div id="wrapper">            
             @include('partials.sidebar')
             <!-- Main Content -->
-            <div id="content-wrapper" class="d-flex flex-column">
-                <div id="content">
+            <div id="content-wrapper">
+                <!-- Navbar -->
+                @include('partials.navbar')
+                <!-- End of Navbar -->
 
-                    @include('partials.navbar')
-
-                    <div class="container-fluid">
-                        @yield('content')
-                    </div>
-
+                <!-- Content -->
+                <div class="container-fluid">
+                    @yield('content')
                 </div>
-                
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; 2023 <div class="bullet"></div> Design By <a href="https://github.com/Edokur">Caraka Tech</a></span>
-                        </div>
-                    </div>
-                </footer>
-                
+                <!-- End of Content -->
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer class="sticky-footer">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; 2023 <div class="bullet"></div> Design By <a href="https://github.com/Edokur">Caraka Tech</a></span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">

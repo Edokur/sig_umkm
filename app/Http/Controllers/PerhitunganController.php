@@ -10,35 +10,15 @@ class PerhitunganController extends Controller
 {
     public function index()
     {
-        // $data_cluster = DB::table('cluster')->get();
-        // $data_variabel = DB::table('variabel')->get();
-        // // $umkm = DB::table('umkm')->select('nama_umkm, norma_omset, norma_asset')->get();
-        // $umkm = DB::select('select nama_umkm, norma_omset, norma_asset from umkm');;
-
-        // $data = [
-        //     ['nama_umkm' => 'Kutemo Store', 2, 3],
-        //     ['nama_umkm' => 'Bunga Surga', 1, 1],
-        //     ['nama_umkm' => 'Thai Dap', 1, 2],
-        //     ['nama_umkm' => 'Yoguri', 2, 3],
-        //     ['nama_umkm' => 'Rollade dan Galantin KITA', 1, 2],
-        //     ['nama_umkm' => 'Tanesia Food / Ratumeal', 1, 2],
-        //     ['nama_umkm' => 'Kios Bu Endang', 1, 2],
-        //     ['nama_umkm' => 'Ayam geprek DARA Bumijo', 1, 1],
-        //     ['nama_umkm' => 'BAKPIA POTRET DJOKDJA', 2, 3],
-        //     ['nama_umkm' => 'KING Bedsheet dan Bedcover', 1, 2],
-        //     ['nama_umkm' => 'PURNAMA PUTRA GROUP', 1, 2]
-        // ];
-        // // dd($data);
-
-        // return view('data_kmeans.index', compact('data'), [
-        //     'title' => 'Penilaian Kmeans',
-        //     'clusters' => $data_cluster,
-        //     'variabel' => $data_variabel,
-        // ])->with('i');
-
         $data_cluster = DB::table('cluster')->get();
         $data_variabel = DB::table('variabel')->get();
-        $umkm = DB::select('select nama_umkm, norma_omset, norma_asset from umkm');
+        $umkm1 = DB::select('select id, nama_umkm, norma_omset, norma_asset from umkm where norma_omset = 1 and norma_asset = 1 order by RAND() LIMIT 1');
+        $umkm2 = DB::select('select id, nama_umkm, norma_omset, norma_asset from umkm where norma_omset = 1 and norma_asset = 2 order by RAND() LIMIT 1');
+        $umkm3 = DB::select('select id, nama_umkm, norma_omset, norma_asset from umkm where norma_omset = 2 and norma_asset = 3 order by RAND() LIMIT 1');
+
+        $umkm = DB::select('select nama_umkm, norma_omset, norma_asset from umkm order by RAND()');
+
+        $v_umkm = DB::select('select nama_umkm, norma_omset, norma_asset from umkm WHERE id NOT IN (' . $umkm1[0]->id . ', ' . $umkm2[0]->id . ', ' . $umkm3[0]->id . ') order by RAND()');
 
         $data = [];
         for ($i = 0; $i < count($umkm); $i++) {
@@ -49,6 +29,10 @@ class PerhitunganController extends Controller
             'title' => 'Penilaian Kmeans',
             'clusters' => $data_cluster,
             'variabel' => $data_variabel,
+            'v_umkm1' => $umkm1,
+            'v_umkm2' => $umkm2,
+            'v_umkm3' => $umkm3,
+            'v_umkm' => $v_umkm,
         ])->with('i');
     }
 
