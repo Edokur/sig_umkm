@@ -304,7 +304,7 @@
                                 <th colspan="2" rowspan="2">Hasil Normalisasi</th>
                                 <th colspan="3">Jarak Ke Centroid</th>
                                 <th rowspan="2">Jarak Terdekat</th>
-                                <th rowspan="2">Cluster</th>
+                                <th rowspan="2">Hasil Klasifikasi</th>
                             </tr>
                             <tr>
                                 <th>Usaha Mikro</th>
