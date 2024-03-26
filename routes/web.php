@@ -9,6 +9,7 @@ use App\Http\Controllers\DataumkmController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VariabelController;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,41 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/', [MapController::class, 'index'])->name('location');
     Route::get('/filter-locations', [MapController::class, 'filterLocations'])->name('filter.locations');
     Route::get('/get-all-locations', [MapController::class, 'loadallLocations'])->name('loadall.locations');
+    Route::get('/test', [MapController::class, 'test']);
+    Route::get('/prov-yogyakarta', function () {
+        $path = public_path('json/prov_yogyakarta.json');
+
+        // Periksa apakah file ada
+        if (File::exists($path)) {
+            // Baca isi file JSON
+            $jsonContent = File::get($path);
+
+            // Ubah JSON menjadi array atau objek
+            $data = json_decode($jsonContent, true); // Ubah ke array
+
+            // Gunakan data sesuai kebutuhan Anda
+            return $data;
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+    });
+    Route::get('/kec-yogyakarta', function () {
+        $path = public_path('json/kec_yogyakarta.json');
+
+        // Periksa apakah file ada
+        if (File::exists($path)) {
+            // Baca isi file JSON
+            $jsonContent = File::get($path);
+
+            // Ubah JSON menjadi array atau objek
+            $data = json_decode($jsonContent, true); // Ubah ke array
+
+            // Gunakan data sesuai kebutuhan Anda
+            return $data;
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+    });
 });
 
 ### Start Dashboard

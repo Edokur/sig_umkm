@@ -106,7 +106,7 @@
                                                 
                                             </div>
                                             <button type="button" onclick="applyFilter()" id="filterButton" class="btn btn-primary mt-4 mr-2">Cari</button>
-                                            <button type="button" onclick="loadAllLocations()" id="resetButton" class="btn btn-danger mt-4">Reset</button>
+                                            <button type="button" onclick="loadpage()" id="resetButton" class="btn btn-danger mt-4">Reset</button>
                                         </form>
                                     </div>
                                 </div>
@@ -206,6 +206,22 @@
             );
 
             map.on('load', () => {
+
+                map.addSource('YOGYAKARTA', {
+                    'type': 'geojson',
+                    'data': '/prov-yogyakarta'
+                });
+
+                map.addLayer({
+                    'id': 'outline',
+                    'type': 'line',
+                    'source': 'YOGYAKARTA',
+                    'paint': {
+                        'line-color': '#000',
+                        'line-width': 3
+                    }
+                });
+        
             // the rest of the code will go in here
                 const layers = [
                     'Belum DiKlasifikasi',
@@ -239,7 +255,9 @@
                 mapboxgl: mapboxgl
             });
 
-
+            function loadpage(){
+                location.reload();
+            }
             // Fungsi untuk memuat semua lokasi saat halaman dimuat
             function loadAllLocations() {
                 const filters = {
@@ -270,6 +288,13 @@
             
 
             function applyFilter() {
+
+                // Menghapus layer dari peta
+                // map.removeLayer('outline');
+                map.setLayoutProperty('outline', 'visibility', 'none');
+                // Menghapus sumber data dari peta
+                // map.removeSource('YOGYAKARTA');
+
                 const klasifikasiFilter = document.getElementById('klasifikasiFilter').value;
                 const kategoriFilter = document.getElementById('kategoriFilter').value;
                 const kecamatanFilter = document.getElementById('kecamatanFilter').value;
@@ -281,6 +306,8 @@
                     kecamatanFilter: kecamatanFilter,
                     searchUmkm: searchUmkm
                 };
+
+
                 // Kirim permintaan filter ke server dengan Ajax
                 $.ajax({
                     url: '/filter-locations',
@@ -294,7 +321,9 @@
                     success: function (data) {
                         // Parsing string JSON dari data
                         const parsedData = JSON.parse(data.geoJsonFilter);
+                        // console.log(parsedData)
                         // Membentuk ulang objek sesuai dengan format yang diinginkan
+
                         const formattedData = {
                             type: parsedData.type,
                             features: parsedData.features
@@ -309,16 +338,27 @@
                 });
             }
 
+            var z ;
             let markers = []; // Array untuk menyimpan marker
             function loadLocations(geoJson, filters) {
+                if (filters.kecamatanFilter != z) {
+                    // map.removeLayer(z);
+                    map.setLayoutProperty(z, 'visibility', 'none');
+                }else{
+                    map.setLayoutProperty(z, 'visibility', 'visible');
+                }
+                
                 // Hapus semua marker dari peta
                 markers.forEach(marker => marker.remove());
+
                 markers = []; // Bersihkan array marker
 
                 // Tambahkan marker untuk setiap fitur dalam geoJson
                 geoJson.features.forEach((location) => {
                     const {geometry, properties, filter} = location
                     const {iconSize, locationId, nama_umkm, jenis_produk, klasifikasi_usaha, kecamatan} = properties
+
+                    z = kecamatan;
                     // Terapkan filter
                     if (
                         (!filters.kategoriFilter || jenis_produk === filters.kategoriFilter) &&
@@ -339,6 +379,46 @@
                         } else {
                             markerElement.style.backgroundImage = 'url({!! asset('admin_assets/img/location_orange.png') !!})';
                         }
+
+                        // console.log(kecamatan);
+                        
+                        fetch('/kec-yogyakarta')
+                        .then(response => response.json())
+                        .then(data => {
+                            // Membentuk ulang objek sesuai dengan format yang diinginkan
+
+                            let kec = data.features;
+                            for (let index = 0; index < kec.length; index++) {
+
+                                if (kecamatan == kec[index].region){
+                                    map.addSource(kecamatan, {
+                                        'type': 'geojson',
+                                        'data': {
+                                            'type': 'FeatureCollection',
+                                            'features': [
+                                                {
+                                                    'type': 'Feature',
+                                                    'properties': {},
+                                                    'geometry': kec[index].geometry
+                                                }
+                                            ]
+                                        }
+                                    });
+
+                                    map.addLayer({
+                                        'id': kecamatan,
+                                        'type': 'line',
+                                        'source': kecamatan,
+                                        'paint': {
+                                            'line-color': '#000',
+                                            'line-width': 3
+                                        }
+                                    });
+                                }
+                                
+                            }
+                            
+                        })
                         markerElement.style.backgroundSize = 'cover';
                         markerElement.style.width = '50px';
                         markerElement.style.height = '50px';
@@ -359,7 +439,6 @@
                         const popUp = new mapboxgl.Popup({
                             offset: 25
                         }).setHTML(card).setMaxWidth("50%");
-
                         // Tambahkan marker ke peta
                         const marker = new mapboxgl.Marker(markerElement)
                             .setLngLat(geometry.coordinates)

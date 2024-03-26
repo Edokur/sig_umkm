@@ -189,4 +189,11 @@ class MapController extends Controller
 
         return response()->json(['geoJsonFilter' => $geoJson]);
     }
+
+    public function test()
+    {
+        return view(
+            'guest.test'
+        );
+    }
 }

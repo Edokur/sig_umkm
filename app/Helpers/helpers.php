@@ -19,15 +19,15 @@ if (!function_exists('CentroidAwal')) {
         // dd($data);
         $ctr = array(
             0 => array(
-                0 => "1",
-                1 => "1"
-            ),
-            1 => array(
-                0 => "1",
+                0 => "2",
                 1 => "2"
             ),
-            2 => array(
+            1 => array(
                 0 => "2",
+                1 => "1"
+            ),
+            2 => array(
+                0 => "3",
                 1 => "3"
             ),
         );
